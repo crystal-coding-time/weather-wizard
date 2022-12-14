@@ -5,8 +5,10 @@ let weatherChecker = 'https://api.openweathermap.org/data/2.5/weather?';
 let getWeatherByCityName = async (city) => {
     let endpoint = weatherChecker + 'q=' + city + weatherAPIKey;
     let responce = await fetch(endpoint);
+
+    console.log(responce);
 }
 
-console.log(responce);
+
 
 getWeatherByCityName('london');
