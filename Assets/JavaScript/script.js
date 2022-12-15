@@ -1,12 +1,12 @@
 // Below are my query selectors
 let searchInp = document.querySelector('.weather-search');
-let city = document.querySelector('.weather-city');
-let day = document.querySelector('.weather-day');
-let humidity = document.querySelector('.humidity>.value');
-let wind = document.querySelector('.wind>.value');
-let pressure = document.querySelector('.pressure>.value');
-let image = document.querySelector('.weather-img')
-let temperature = document.querySelector('.temperature');
+// let city = document.querySelector('.weather-city');
+// let day = document.querySelector('.weather-day');
+// let humidity = document.querySelector('.humidity>.value');
+// let wind = document.querySelector('.wind>.value');
+// let pressure = document.querySelector('.pressure>.value');
+// let image = document.querySelector('.weather-img')
+// let temperature = document.querySelector('.temperature');
 
 // Below are my API selectors
 let weatherAPIKey = 'caaae4a391468490b870f3bb48d1aa3d';
@@ -17,18 +17,22 @@ let getWeatherByCityName = async (city) => {
     let endpoint = weatherChecker + '&q=' + city;
     let responce = await fetch(endpoint);
     let weather = await responce.json();
-    return weather;
     
-}
-
-getWeatherByCityName('New York');
-
-searchInp.addEventListener('keydown', async (e) => {
-if(e.KeyCode === 13) {
-    let weather = await getWeatherByCityName(searchInp.value);
+    
     console.log(weather);
 }
+
+getWeatherByCityName();
+
+searchInp.addEventListener('keydown', async (e) => {
+if(e.keyCode === 13) {
+let weather = await getWeatherByCityName(searchInp.value);
+console.log(weather);
+}
+console.log(searchInp);
 })
+
+
 
 
 // When A user enters a city name into the search Bar
