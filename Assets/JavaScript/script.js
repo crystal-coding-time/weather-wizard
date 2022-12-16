@@ -6,7 +6,7 @@ let humidity = document.querySelector('.humidity>.value');
 let wind = document.querySelector('.wind>.value');
 let pressure = document.querySelector('.pressure>.value');
 let image = document.querySelector('.weather-img')
-let temperature = document.querySelector('.temperature');
+let temperature = document.querySelector('.temperature>.value');
 
 // Below are my API selectors
 let weatherAPIKey = 'caaae4a391468490b870f3bb48d1aa3d';
@@ -17,8 +17,6 @@ let getWeatherByCityName = async (city) => {
     let endpoint = weatherChecker + '&q=' + city;
     let responce = await fetch(endpoint);
     let weather = await responce.json();
-    
-    console.log(weather);
     
     return weather;
     
@@ -38,11 +36,32 @@ if(e.keyCode === 13) {
 
 let updateCurrentWeather = (data) => {
     console.log(data);
-    city.innerHTML = data.name + ', ' + data.sys.country;
+    city.innerHTML = data.name + ', ' + data.sys.country; // This displays the city name and country targeting city.innerHTML 
     day.innerHTML = dayOfWeek();
-    // humidity.innerHTML = '';
+    humidity.innerHTML = data.main.humidity; // This displays the humidity targeting humidity.innerHTML
+    pressure.innerHTML = data.main.pressure; // This displays the pressure targeting pressure.innerHTML
+    
+    // The below code determines the wind direction by taking the degrees from the main data set and translating it to N/E/S/W
+
+    let windDirection = '';
+    let deg = data.wind.deg;
+    if (deg > 45 && deg <= 135) {
+        windDirection = 'East';
+    } else if (deg > 135 && deg <= 225) {
+        windDirection = 'South';
+    } else if (deg > 225 && deg <= 315) {
+        windDirection = 'West';
+    } else {
+        windDirection = 'North';
+    };
+    
+    wind.innerHTML = windDirection + ', ' + data.wind.speed // This displays the wind speed and direction targeting wind.innerHTML 
+    temperature.textContent = data.main.temp > 0 ? 
+        '+' + Math.round(data.main.temp) : 
+              Math.round(data.main.temp); // This displays the temperature targeting the temperature.innerHTML
 }
 
+// The below code displays the day of the week targeting day.innerHTML 
 let dayOfWeek = () => {
     return new Date().toLocaleDateString('en-EN', {'weekday': 'long'});
 }
