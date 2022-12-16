@@ -26,10 +26,11 @@ getWeatherByCityName();
 
 searchInp.addEventListener('keydown', async (e) => {
 if(e.keyCode === 13) {
-let weather = await getWeatherByCityName(searchInp.value);
-console.log(weather);
+    e.preventDefault(); 
+    let weather = await getWeatherByCityName(searchInp.value);
+    console.log(weather);
 }
-console.log(searchInp);
+    console.log(searchInp.value);
 })
 
 
