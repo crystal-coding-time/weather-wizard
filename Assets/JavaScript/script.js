@@ -91,43 +91,57 @@ searchInp.addEventListener('input', async () => {
     }
   })
 
-let updateCurrentWeather = (data) => {
-    console.log(data);
-    city.innerHTML = data.name + ', ' + data.sys.country; // This displays the city name and country targeting city.innerHTML 
-    day.innerHTML = dayOfWeek();
-    humidity.innerHTML = data.main.humidity; // This displays the humidity targeting humidity.innerHTML
-    pressure.innerHTML = data.main.pressure; // This displays the pressure targeting pressure.innerHTML
+  let updateCurrentWeather = (data) => {
+    city.textContent = data.name + ', ' + data.sys.country; // This displays the city name and country targeting city.innerHTML 
+    day.textContent = dayOfWeek();
+    humidity.textContent = data.main.humidity; // This displays the humidity targeting humidity.innerHTML
+    pressure.textContent = data.main.pressure; // This displays the pressure targeting pressure.innerHTML
     
     // The below code determines the wind direction by taking the degrees from the main data set and translating it to N/E/S/W
-
-    let windDirection = '';
-    let deg = data.wind.deg;
-    if (deg > 45 && deg <= 135) {
-        windDirection = 'East';
-    } else if (deg > 135 && deg <= 225) {
-        windDirection = 'South';
-    } else if (deg > 225 && deg <= 315) {
-        windDirection = 'West';
-    } else {
-        windDirection = 'North';
-    };
     
-    wind.innerHTML = windDirection + ', ' + data.wind.speed // This displays the wind speed and direction targeting wind.innerHTML 
-    temperature.textContent = data.main.temp > 0 ? 
-        '+' + Math.round(data.main.temp) : 
-              Math.round(data.main.temp); // This displays the temperature targeting the temperature.innerHTML
-
+    let windDirection;
+    let deg = data.wind.deg;
+    if(deg > 45 && deg <= 135){
+      windDirection = 'East';
+    } else if(deg > 135 && deg <= 225){
+      windDirection = 'South';
+    } else if(deg > 225 && deg <= 315){
+      windDirection = 'West';
+    } else {
+      windDirection = 'North';
+    }
+    wind.textContent = windDirection + ',  ' + data.wind.speed;
+    temperature.textContent = data.main.temp > 0 ?
+                                '+' + Math.round(data.main.temp) :
+                                Math.round(data.main.temp); // This displays the temperature targeting the temperature.innerHTML
     let imgID = data.weather[0].id;
     weatherImages.forEach(obj => {
-        if(obj.ids.includes(imgID)) {
-            image.src = obj.url;
-        }
-    })            
-}
+      if(obj.ids.includes(imgID)) {
+        image.src = obj.url;
+      }
+    })                            
+  }
 
-
+let updateForcast = (forcast) => {
+    forecastBlock.innerHTML = '';
+    forcast.forEach(day => {
+      let iconUrl = 'http://openweathermap.org/img/wn/' + day.weather[0].icon + '@2x.png';
+      let dayName = dayOfWeek(day.dt * 1000);
+      let temperature = day.main.temp > 0 ?
+                '+' + Math.round(day.main.temp) :
+                Math.round(day.main.temp);
+      let forcastItem = `
+        <article class="weather-item">
+          <img src="${iconUrl}" alt="${day.weather[0].description}" class="weather-img">
+          <h3 class="weather-day">${dayName}</h3>
+          <p class="weather-temp">${temperature}</p>
+        </article>
+      `;
+      forecastBlock.insertAdjacentHTML('beforeend', forcastItem);
+    })
+  }
 
 // The below code displays the day of the week targeting day.innerHTML 
-let dayOfWeek = () => {
-    return new Date().toLocaleDateString('en-EN', {'weekday': 'long'});
+let dayOfWeek = (dt = new Date().getTime()) => {
+  return new Date(dt).toLocaleDateString('en-EN', {'weekday': 'long'});
 }
