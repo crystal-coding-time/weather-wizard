@@ -17,8 +17,11 @@ let getWeatherByCityName = async (city) => {
     let endpoint = weatherChecker + '&q=' + city;
     let responce = await fetch(endpoint);
     let weather = await responce.json();
-    return weather;
+    
     console.log(weather);
+    
+    return weather;
+    
 }
 
 getWeatherByCityName();
@@ -34,9 +37,15 @@ if(e.keyCode === 13) {
 })
 
 let updateCurrentWeather = (data) => {
-    city.textcontent = data.name + ', ' + data.sys.country;
+    console.log(data);
+    city.innerHTML = data.name + ', ' + data.sys.country;
+    day.innerHTML = dayOfWeek();
+    // humidity.innerHTML = '';
 }
 
+let dayOfWeek = () => {
+    return new Date().toLocaleDateString('en-EN', {'weekday': 'long'});
+}
 
 // When A user enters a city name into the search Bar
 // The Direct geocoding API converts input into geographical coordinates (lat, lon) 
