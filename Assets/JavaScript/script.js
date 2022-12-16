@@ -12,24 +12,62 @@ let suggestions = document.querySelector('#suggestions');
 
 // Below are my API selectors
 let weatherAPIKey = 'caaae4a391468490b870f3bb48d1aa3d';
-// let geocoding = 'http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}';
 let weatherChecker = 'https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=' + weatherAPIKey;
-let forecastBaseEndpoint = 'https://api.openweathermap.org/data/2.5/forecast?units=imperial&appid=' + weatherAPIKey;
+let forecastChecker = 'https://api.openweathermap.org/data/2.5/forecast?units=imperial&appid=' + weatherAPIKey;
 let cityBaseEndpoint = 'https://api.teleport.org/api/cities/?search=';
 
-let getWeatherByCityName = async (city) => {
-    let endpoint = weatherChecker + '&q=' + city;
-    let response = await fetch(endpoint);
-    if(response.status !== 200) {
-        alert('City Not Found!');
-        return;
-      }
-      let weather = await response.json();
-      return weather;
+let getWeatherByCityName = async (citystring) =>{
+  let city;
+  if(citystring.includes(',')) {
+    city = citystring.substring(0, citystring.indexOf(',')) + citystring.substring(citystring.lastIndexOf(','));
+  } else {
+    city = citystring;
+  }
+  let endpoint = weatherChecker + '&q=' + city;
+  let response = await fetch(endpoint);
+  if(response.status !== 200) {
+    alert('City Not Found!');
+    return;
+  }
+  let weather = await response.json();
+  return weather;
 }
 
-// getWeatherByCityName();
+let getForcastByCityID = async(id) => {
+    let endpoint = forecastChecker + '&id=' +id;
+    let result = await fetch(endpoint);
+    let forecast = await result.json();
+    let forcastList = forecast.list;
+    let daily = [];
+  
+    forcastList.forEach(day => {
+      let date = new Date(day.dt_txt.replace(' ', 'T'));
+      let hours = date.getHours();
+      if(hours === 12) {
+        daily.push(day)
+      }
+    })
+    return daily;
+  }
+  
+  let weatherForCity = async (city) => {
+    let weather = await getWeatherByCityName(city);
+      if(!weather) {
+        return;
+      }
+      let cityID = weather.id;
+      updateCurrentWeather(weather);
+      let forcast = await getForcastByCityID(cityID);
+      updateForcast(forcast);
+  }
+  
+  let init = () => {
+    weatherForCity('New York').then(() => document.body.style.filter = 'blur(0)');
+  }
+  
+  init();
 
+// The below code triggers the function once the city is entered into the seach bar and the enter key is pressed
 searchInp.addEventListener('keydown', async (e) => {
 if(e.keyCode === 13) {
     e.preventDefault(); 
@@ -39,6 +77,19 @@ if(e.keyCode === 13) {
 }
 
 })
+
+searchInp.addEventListener('input', async () => {
+    let endpoint = cityBaseEndpoint + searchInp.value;
+    let result = await (await fetch(endpoint)).json();
+    suggestions.innerHTML = '';
+    let cities = result._embedded['city:search-results'];
+    let length = cities.length > 5 ? 5 :cities.length;
+    for(let i =0; i<length; i++) {
+      let option = document.createElement('option');
+      option.value = cities[i].matching_full_name;
+      suggestions.appendChild(option);
+    }
+  })
 
 let updateCurrentWeather = (data) => {
     console.log(data);
@@ -65,13 +116,18 @@ let updateCurrentWeather = (data) => {
     temperature.textContent = data.main.temp > 0 ? 
         '+' + Math.round(data.main.temp) : 
               Math.round(data.main.temp); // This displays the temperature targeting the temperature.innerHTML
+
+    let imgID = data.weather[0].id;
+    weatherImages.forEach(obj => {
+        if(obj.ids.includes(imgID)) {
+            image.src = obj.url;
+        }
+    })            
 }
+
+
 
 // The below code displays the day of the week targeting day.innerHTML 
 let dayOfWeek = () => {
     return new Date().toLocaleDateString('en-EN', {'weekday': 'long'});
 }
-
-// When A user enters a city name into the search Bar
-// The Direct geocoding API converts input into geographical coordinates (lat, lon) 
-// Then that is passed through to my Current weather data API 
