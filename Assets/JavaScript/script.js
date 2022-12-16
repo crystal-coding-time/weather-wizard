@@ -7,22 +7,28 @@ let wind = document.querySelector('.wind>.value');
 let pressure = document.querySelector('.pressure>.value');
 let image = document.querySelector('.weather-img')
 let temperature = document.querySelector('.temperature>.value');
+let forecastBlock = document.querySelector('.five-day-forecast');
+let suggestions = document.querySelector('#suggestions');
 
 // Below are my API selectors
 let weatherAPIKey = 'caaae4a391468490b870f3bb48d1aa3d';
 // let geocoding = 'http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}';
 let weatherChecker = 'https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=' + weatherAPIKey;
+let forecastBaseEndpoint = 'https://api.openweathermap.org/data/2.5/forecast?units=imperial&appid=' + weatherAPIKey;
+let cityBaseEndpoint = 'https://api.teleport.org/api/cities/?search=';
 
 let getWeatherByCityName = async (city) => {
     let endpoint = weatherChecker + '&q=' + city;
-    let responce = await fetch(endpoint);
-    let weather = await responce.json();
-    
-    return weather;
-    
+    let response = await fetch(endpoint);
+    if(response.status !== 200) {
+        alert('City Not Found!');
+        return;
+      }
+      let weather = await response.json();
+      return weather;
 }
 
-getWeatherByCityName();
+// getWeatherByCityName();
 
 searchInp.addEventListener('keydown', async (e) => {
 if(e.keyCode === 13) {
