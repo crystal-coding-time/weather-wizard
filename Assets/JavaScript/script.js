@@ -125,18 +125,30 @@ searchInp.addEventListener('input', async () => {
 let updateForcast = (forcast) => {
     forecastBlock.innerHTML = '';
     forcast.forEach(day => {
-      let iconUrl = 'http://openweathermap.org/img/wn/' + day.weather[0].icon + '@2x.png';
+      let weatherImg = '';
+      // let iconUrl = 'http://openweathermap.org/img/wn/' + day.weather[0].icon + '@2x.png';
       let dayName = dayOfWeek(day.dt * 1000);
       let temperature = day.main.temp > 0 ?
                 '+' + Math.round(day.main.temp) :
                 Math.round(day.main.temp);
-      let forcastItem = `
-        <article class="weather-item col-md-2">
-          <img src="${iconUrl}" alt="${day.weather[0].description}" class="weather-img">
-          <h3 class="weather-day">${dayName}</h3>
-          <p class="weather-temp">${temperature}</p>
-        </article>
-      `;
+
+      if(day.weather[0].description=="clear sky")
+      {
+        weatherImg = "./Assets/Images/sun.png"
+      }
+      else if(day.weather[0].description=="few clouds"){
+        weatherImg = "./Assets/Images/cloudiness.png"
+      }
+      else if(day.weather[0].description=="moderate rain"){
+        weatherImg = "./Assets/Images/rain.png"
+      }
+
+    let forcastItem = `
+        <article class="weather-item col-2">
+        <img width="100px" src="${'weatherImg'}" alt="${day.weather[0].description}" class="weather-img">
+        <h3 class="weather-day">${dayName}</h3>
+        <p class="weather-temp">${temperature} &deg;F</p>
+        </article>`;
       forecastBlock.insertAdjacentHTML('beforeend', forcastItem);
     })
   }
