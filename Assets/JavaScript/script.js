@@ -126,7 +126,6 @@ let updateForcast = (forcast) => {
     forecastBlock.innerHTML = '';
     forcast.forEach(day => {
       let weatherImg = '';
-      // let iconUrl = 'http://openweathermap.org/img/wn/' + day.weather[0].icon + '@2x.png';
       let dayName = dayOfWeek(day.dt * 1000);
       let temperature = day.main.temp > 0 ?
                 '+' + Math.round(day.main.temp) :
@@ -134,13 +133,13 @@ let updateForcast = (forcast) => {
 
       if(day.weather[0].description=="clear sky")
       {
-        weatherImg = "./Assets/Images/sun.png"
+        weatherImg = ".Assets/Images/sun.png"
       }
       else if(day.weather[0].description=="few clouds"){
-        weatherImg = "./Assets/Images/cloudiness.png"
+        weatherImg = ".Assets/Images/cloudiness.png"
       }
       else if(day.weather[0].description=="moderate rain"){
-        weatherImg = "./Assets/Images/rain.png"
+        weatherImg = ".Assets/Images/rain.png"
       }
 
     let forcastItem = `
