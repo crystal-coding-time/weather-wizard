@@ -12,64 +12,66 @@
 <body>
     <!-- Below is for the header -->
     <div class="card">
-        <header class="">
-            <h1 class="">Weather Wizard</h1>
-            <p>Search your city for a 5 day forecast.</p>
+        <header class="bg-info">
+            <h1 class="text-center">Weather Wizard</h1>
+            <p class="text-center">Search your city for a 5 day forecast.</p>
         </header>
     </div>
 
     
   <main class="container">
-    <div class="col-12 col-md-4">
-
       <div class="weather p-5 my-4 bg-light rounded-3">
-        <h3 class="">Search By City</h3>
-        <input type="search" list="suggestions" class="weather-search" placeholder="Your City">
+        <h3 class="text-center">Search By City</h3>
+        <input type="search" list="suggestions" class="weather-search form-control-lg form-control text-center" placeholder="Your City">
         <datalist id="suggestions"></datalist>
       </div>
 
-      <div class="current-weather">
-        <div class="weather-details">
+      <div class="current-weather row">
+        <div class="weather-details col-6 text-center">
           <h2 class="weather-city">City</h2>
           <p class="weather-day">Day</p>
           <div class="weather-details">
+            <p class="temperature"><span class="value">+25</span> &deg;F</p>
             <p class="weather-indicator humidity"><span class="value">50</span>%</p>
             <p class="weather-indicator wind"><span class="value">West, 5</span>m/s</p>
             <p class="weather-indicator pressure"><span class="value">1050</span>hPa</p>
           </div>
         </div>
+        <div class="col-6">
         <img src="./Assets/Images/sun.png" alt="Sunny Weather" class="weather-image">
-        <div class="temperature"><span class="value">+25</span> &deg;F</div>
       </div>
+      </div>
+      
+    
 
-  <div class="five-day-forecast">
-    <article class="weather-item">
-      <img src="./Assets/Images/sun.png" alt="Sunny Weather" class="weather-img">
-      <h3 class="weather-day">Day</h3>
-      <p class="weather-temp"><span class="value">+25</span> &deg;F</p>
+  <div class="five-day-forecast row">
+    <article class="weather-item col-md-2">
+      <img src="" alt="" class="weather-img">
+      <h3 class="weather-day"></h3>
+      <p class="weather-temp"><span class="value"></span> </p>
     </article>
-    <article class="weather-item">
-      <img src="./Assets/Images/sun.png" alt="Sunny Weather" class="weather-img">
-      <h3 class="weather-day">Day</h3>
-      <p class="weather-temp"><span class="value">+25</span> &deg;F</p>
+    <article class="weather-item col-md-2">
+      <img src="" alt="" class="weather-img">
+      <h3 class="weather-day"></h3>
+      <p class="weather-temp"><span class="value"></span> </p>
     </article>
-    <article class="weather-item">
-      <img src="./Assets/Images/sun.png" alt="Sunny Weather" class="weather-img">
-      <h3 class="weather-day">Day</h3>
-      <p class="weather-temp"><span class="value">+25</span> &deg;F</p>
+    <article class="weather-item col-md-2">
+      <img src="" alt="" class="weather-img">
+      <h3 class="weather-day"></h3>
+      <p class="weather-temp"><span class="value"></span> </p>
     </article>
-    <article class="weather-item">
-      <img src="./Assets/Images/sun.png" alt="Sunny Weather" class="weather-img">
-      <h3 class="weather-day">Day</h3>
-      <p class="weather-temp"><span class="value">+25</span> &deg;F</p>
+    <article class="weather-item col-md-2">
+      <img src="" alt="" class="weather-img">
+      <h3 class="weather-day"></h3>
+      <p class="weather-temp"><span class="value"></span> </p>
     </article>
-    <article class="weather-item">
-      <img src="./Assets/Images/sun.png" alt="Sunny Weather" class="weather-img">
-      <h3 class="weather-day">Day</h3>
-      <p class="weather-temp"><span class="value">+25</span> &deg;F</p>
+    <article class="weather-item col-md-2">
+      <img src="" alt="" class="weather-img">
+      <h3 class="weather-day"></h3>
+      <p class="weather-temp"><span class="value"></span> </p>
     </article>
   </div>
-  </main>
+</main>
     <!-- Below links my JavaScript -->
     <script src="./Assets/JavaScript/weather.js"></script>
     <script src="./Assets/JavaScript/script.js"></script>

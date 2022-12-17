@@ -16,7 +16,7 @@ let weatherChecker = 'https://api.openweathermap.org/data/2.5/weather?units=impe
 let forecastChecker = 'https://api.openweathermap.org/data/2.5/forecast?units=imperial&appid=' + weatherAPIKey;
 let cityBaseEndpoint = 'https://api.teleport.org/api/cities/?search=';
 
-let getWeatherByCityName = async (citystring) =>{
+let getWeatherByCityName = async (citystring) =>{ //This is an async function which paits for the answer of the API
   let city;
   if(citystring.includes(',')) {
     city = citystring.substring(0, citystring.indexOf(',')) + citystring.substring(citystring.lastIndexOf(','));
@@ -61,8 +61,8 @@ let getForcastByCityID = async(id) => {
       updateForcast(forcast);
   }
   
-  let init = () => {
-    weatherForCity('New York').then(() => document.body.style.filter = 'blur(0)');
+  let init = (city) => {
+    weatherForCity(city).then(() => document.body.style.filter = 'blur(0)');
   }
   
   init();
@@ -73,7 +73,7 @@ if(e.keyCode === 13) {
     e.preventDefault(); 
     let weather = await getWeatherByCityName(searchInp.value);
     updateCurrentWeather(weather);
-    
+    init(searchInp.value);
 }
 
 })
@@ -131,7 +131,7 @@ let updateForcast = (forcast) => {
                 '+' + Math.round(day.main.temp) :
                 Math.round(day.main.temp);
       let forcastItem = `
-        <article class="weather-item">
+        <article class="weather-item col-md-2">
           <img src="${iconUrl}" alt="${day.weather[0].description}" class="weather-img">
           <h3 class="weather-day">${dayName}</h3>
           <p class="weather-temp">${temperature}</p>
