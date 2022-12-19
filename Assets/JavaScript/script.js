@@ -10,6 +10,7 @@ let temperature = document.querySelector('.temperature>.value');
 let forecastBlock = document.querySelector('.five-day-forecast');
 let suggestions = document.querySelector('#suggestions');
 
+
 // Below are my API selectors
 let weatherAPIKey = 'caaae4a391468490b870f3bb48d1aa3d';
 let weatherChecker = 'https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=' + weatherAPIKey;
@@ -122,35 +123,31 @@ searchInp.addEventListener('input', async () => {
     })                            
   }
 
-let updateForcast = (forcast) => {
-    forecastBlock.innerHTML = '';
-    forcast.forEach(day => {
-      let weatherImg = '';
+  let updateForcast = (forcast) => {
+    console.log(forcast);
+    forecastBlock.innerHTML = "";
+    forcast.forEach((day) => {
+      let weatherImg = "";
       let dayName = dayOfWeek(day.dt * 1000);
-      let temperature = day.main.temp > 0 ?
-                '+' + Math.round(day.main.temp) :
-                Math.round(day.main.temp);
-
-      if(day.weather[0].description=="clear sky")
-      {
-        weatherImg = ".Assets/Images/sun.png"
-      }
-      else if(day.weather[0].description=="few clouds"){
-        weatherImg = ".Assets/Images/cloudiness.png"
-      }
-      else if(day.weather[0].description=="moderate rain"){
-        weatherImg = ".Assets/Images/rain.png"
-      }
-
-    let forcastItem = `
-        <article class="weather-item col-2">
-        <img width="100px" src="${'weatherImg'}" alt="${day.weather[0].description}" class="weather-img">
-        <h3 class="weather-day">${dayName}</h3>
-        <p class="weather-temp">${temperature} &deg;F</p>
-        </article>`;
-      forecastBlock.insertAdjacentHTML('beforeend', forcastItem);
-    })
-  }
+      let temperature =
+        day.main.temp > 0
+          ? "+" + Math.round(day.main.temp)
+          : Math.round(day.main.temp);
+  
+      //display the images from the response in forecast
+      var icons = day.weather[0].icon;
+      var iconUrl = "http://openweathermap.org/img/w/" + icons + ".png";
+      weatherImg = iconUrl;
+  
+      let forcastItem = `
+          <article class="weather-item col-2 text-center">
+          <img width="100px" src="${weatherImg}" alt="${day.weather[0].description}" class="weather-img">
+          <h3 class="weather-day">${dayName}</h3>
+          <p class="weather-temp img-fluid">${temperature} &deg;F</p>
+          </article>`;
+      forecastBlock.insertAdjacentHTML("beforeend", forcastItem);
+    });
+  };
 
 // The below code displays the day of the week targeting day.innerHTML 
 let dayOfWeek = (dt = new Date().getTime()) => {
