@@ -9,6 +9,9 @@ let image = document.querySelector('.weather-img')
 let temperature = document.querySelector('.temperature>.value');
 let forecastBlock = document.querySelector('.five-day-forecast');
 let suggestions = document.querySelector('#suggestions');
+let deleteButton = document.getElementById("delete");
+let ul = document.getElementById("ul");
+let recentSearches;
 
 
 // Below are my API selectors
@@ -72,10 +75,31 @@ let getForcastByCityID = async(id) => {
 searchInp.addEventListener('keydown', async (e) => {
 if(e.keyCode === 13) {
     e.preventDefault(); 
+  
+    // Trying to get searches saved to local history and then link back to search - not working pulled from main code for now
+
+    // let cityHistory = JSON.parse(localStorage.getItem("searchHistory"));
+    // if (!cityHistory) {
+    //   localStorage.setItem("searchHistory", JSON.stringify([searchInp.value]))
+    //   // Input dymanic HTML code here
+    // } else {
+    //   let newCityHistory = cityHistory.push(searchInp.value)
+    //   localStorage.setItem("searchHistory", JSON.stringify(newCityHistory))
+    //    // Input dymanic HTML code here with loop
+    // } 
     let weather = await getWeatherByCityName(searchInp.value);
     updateCurrentWeather(weather);
     init(searchInp.value);
 }
+
+// if (searchInp.value == "" || isDuplicateValue(recentSearches, searchInp.value)) {
+//   return;
+// } else {
+//   recentSearches.push(searchInp.value);
+//   makeListItem(searchInp.value, ul);
+//   localStorage.recentSearches = JSON.stringify(recentSearches);
+//   searchInp.value = "";
+// }
 
 })
 
@@ -153,3 +177,47 @@ searchInp.addEventListener('input', async () => {
 let dayOfWeek = (dt = new Date().getTime()) => {
   return new Date(dt).toLocaleDateString('en-EN', {'weekday': 'long'});
 }
+
+
+//Below is for the search history 
+
+if (localStorage.recentSearches && localStorage.recentSearches != "") {
+  recentSearches = JSON.parse(localStorage.recentSearches);
+} else {
+  recentSearches = [];
+}
+
+const makeListItem = (text, parent) => {
+  let listItem = document.createElement("li");
+  listItem.textContent = text;
+  listItem.className = "list-group-item";
+  parent.appendChild(listItem);
+};
+
+recentSearches.forEach(element => {
+  makeListItem(element, ul);
+});
+
+const isDuplicateValue = (arr, text) => {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] == text) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+
+// Below is the code for the delete button to clear local history 
+deleteButton.addEventListener("click", () => {
+  localStorage.clear();
+  recentSearches = [];
+  searchInp.value = "";
+  // I use querySelectorAll because it returns a static collection
+  let arr = document.querySelectorAll("li");
+  // I use the static collection for iteration
+  for (let i = 0; i < arr.length; i++) {
+    arr[i].remove();
+  }
+});
