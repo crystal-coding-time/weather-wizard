@@ -164,7 +164,7 @@ searchInp.addEventListener('input', async () => {
       weatherImg = iconUrl;
   
       let forcastItem = `
-          <article class="weather-item col-2 text-center">
+          <article class="weather-item col text-center">
           <img width="100px" src="${weatherImg}" alt="${day.weather[0].description}" class="weather-img">
           <h3 class="weather-day">${dayName}</h3>
           <p class="weather-temp img-fluid">${temperature} &deg;F</p>
