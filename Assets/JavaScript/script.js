@@ -78,28 +78,28 @@ if(e.keyCode === 13) {
   
     // Trying to get searches saved to local history and then link back to search - not working pulled from main code for now
 
-    // let cityHistory = JSON.parse(localStorage.getItem("searchHistory"));
-    // if (!cityHistory) {
-    //   localStorage.setItem("searchHistory", JSON.stringify([searchInp.value]))
-    //   // Input dymanic HTML code here
-    // } else {
-    //   let newCityHistory = cityHistory.push(searchInp.value)
-    //   localStorage.setItem("searchHistory", JSON.stringify(newCityHistory))
-    //    // Input dymanic HTML code here with loop
-    // } 
+    let cityHistory = JSON.parse(localStorage.getItem("searchHistory"));
+    if (!cityHistory) {
+      localStorage.setItem("searchHistory", JSON.stringify([searchInp.value]))
+      // Input dymanic HTML code here
+    } else {
+      let newCityHistory = cityHistory.push(searchInp.value)
+      localStorage.setItem("searchHistory", JSON.stringify(newCityHistory))
+       // Input dymanic HTML code here with loop
+    } 
     let weather = await getWeatherByCityName(searchInp.value);
     updateCurrentWeather(weather);
     init(searchInp.value);
-}
 
-// if (searchInp.value == "" || isDuplicateValue(recentSearches, searchInp.value)) {
-//   return;
-// } else {
-//   recentSearches.push(searchInp.value);
-//   makeListItem(searchInp.value, ul);
-//   localStorage.recentSearches = JSON.stringify(recentSearches);
-//   searchInp.value = "";
-// }
+    if (searchInp.value == "" || isDuplicateValue(recentSearches, searchInp.value)) {
+      return;
+    } else {
+      recentSearches.push(searchInp.value);
+      makeListItem(searchInp.value, ul);
+      localStorage.recentSearches = JSON.stringify(recentSearches);
+      searchInp.value = "";
+    }
+}
 
 })
 
@@ -158,7 +158,7 @@ searchInp.addEventListener('input', async () => {
           ? "+" + Math.round(day.main.temp)
           : Math.round(day.main.temp);
   
-      //display the images from the response in forecast
+      //Display the images from the API response in forecast
       var icons = day.weather[0].icon;
       var iconUrl = "http://openweathermap.org/img/w/" + icons + ".png";
       weatherImg = iconUrl;
