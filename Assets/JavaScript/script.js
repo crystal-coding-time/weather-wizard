@@ -100,7 +100,6 @@ if(e.keyCode === 13) {
       searchInp.value = "";
     }
 }
-
 })
 
 searchInp.addEventListener('input', async () => {
@@ -188,9 +187,13 @@ if (localStorage.recentSearches && localStorage.recentSearches != "") {
 }
 
 const makeListItem = (text, parent) => {
-  let listItem = document.createElement("li");
+  let listItem = document.createElement("li"); //I need to make this a clickable link 
   listItem.textContent = text;
   listItem.className = "list-group-item";
+//   listItem.innerHTML =  `<button>${text}</button>`
+//   listItem.onclick = () => {
+//   element.dispatchEvent(new KeyboardEvent('keydown', {'key': '13'}));
+//  }
   parent.appendChild(listItem);
 };
 
@@ -221,3 +224,5 @@ deleteButton.addEventListener("click", () => {
     arr[i].remove();
   }
 });
+
+
