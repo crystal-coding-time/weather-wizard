@@ -22,12 +22,15 @@
   <main class="container">
       <div class="weather p-5 my-4 bg-light rounded-3">
         <h3 class="text-center">Search By City</h3>
-        <input type="search" list="suggestions" class="weather-search form-control-lg form-control text-center" placeholder="Your City">
-        <datalist id="suggestions"></datalist>
+        <div class="input-group">
+          <input type="search" list="suggestions" class="weather-search form-control form-control-lg text-center" placeholder="Your City">
+          <datalist id="suggestions"></datalist>
+          <button class="btn btn-primary" type="button">Search</button>
+        </div>
       </div>
 
       <div class="current-weather row">
-        <div class="weather-details col-6 text-center">
+        <div class="weather-details col-md-6 text-center">
           <h2 class="weather-city">City</h2>
           <p class="weather-day">Day</p>
           <div class="weather-details">
@@ -37,9 +40,9 @@
             <p class="weather-indicator pressure"><span class="value">1050</span>hPa</p>
           </div>
         </div>
-        <div class="col-6">
-        <img src="./Assets/Images/sun.png" alt="Sunny Weather" class="weather-image img-fluid">
-      </div>
+        <div class="col-md-6 d-flex justify-content-center align-items-center">
+          <img src="./Assets/Images/sun.png" alt="Sunny Weather" class="weather-image img-fluid">
+        </div>
       </div>
 
   <div class="five-day-forecast row">
