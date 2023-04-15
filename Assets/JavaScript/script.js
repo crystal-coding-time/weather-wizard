@@ -226,3 +226,28 @@ deleteButton.addEventListener("click", () => {
 });
 
 
+// let searchBtn = document.querySelector('.btn-primary');
+
+// searchBtn.addEventListener('click', async function(e) {
+//   e.preventDefault(); 
+  
+//   let cityHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+
+//   if (!cityHistory.includes(searchInp.value)) {
+//     cityHistory.push(searchInp.value);
+//     localStorage.setItem("searchHistory", JSON.stringify(cityHistory));
+//   }
+
+//   let weather = await getWeatherByCityName(searchInp.value);
+//   updateCurrentWeather(weather);
+//   init(searchInp.value);
+
+//   if (searchInp.value == "" || isDuplicateValue(recentSearches, searchInp.value)) {
+//     return;
+//   } else {
+//     recentSearches.push(searchInp.value);
+//     makeListItem(searchInp.value, ul);
+//     localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+//     searchInp.value = "";
+//   }
+// });
