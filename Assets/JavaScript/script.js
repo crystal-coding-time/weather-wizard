@@ -68,8 +68,8 @@ let getForcastByCityID = async(id) => {
   let init = (city) => {
     weatherForCity(city).then(() => document.body.style.filter = 'blur(0)');
   }
-  
-  init();
+  // Commented out while debugging
+  // init();
 
 // The below code triggers the function once the city is entered into the seach bar and the enter key is pressed
 searchInp.addEventListener('keydown', async (e) => {
@@ -226,28 +226,28 @@ deleteButton.addEventListener("click", () => {
 });
 
 
-// let searchBtn = document.querySelector('.btn-primary');
+let searchBtn = document.querySelector('.btn-primary');
 
-// searchBtn.addEventListener('click', async function(e) {
-//   e.preventDefault(); 
+searchBtn.addEventListener('click', async function(e) {
+  e.preventDefault(); 
   
-//   let cityHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
+  let cityHistory = JSON.parse(localStorage.getItem("searchHistory")) || [];
 
-//   if (!cityHistory.includes(searchInp.value)) {
-//     cityHistory.push(searchInp.value);
-//     localStorage.setItem("searchHistory", JSON.stringify(cityHistory));
-//   }
+  if (!cityHistory.includes(searchInp.value)) {
+    cityHistory.push(searchInp.value);
+    localStorage.setItem("searchHistory", JSON.stringify(cityHistory));
+  }
 
-//   let weather = await getWeatherByCityName(searchInp.value);
-//   updateCurrentWeather(weather);
-//   init(searchInp.value);
+  let weather = await getWeatherByCityName(searchInp.value);
+  updateCurrentWeather(weather);
+  init(searchInp.value);
 
-//   if (searchInp.value == "" || isDuplicateValue(recentSearches, searchInp.value)) {
-//     return;
-//   } else {
-//     recentSearches.push(searchInp.value);
-//     makeListItem(searchInp.value, ul);
-//     localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
-//     searchInp.value = "";
-//   }
-// });
+  if (searchInp.value == "" || isDuplicateValue(recentSearches, searchInp.value)) {
+    return;
+  } else {
+    recentSearches.push(searchInp.value);
+    makeListItem(searchInp.value, ul);
+    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+    searchInp.value = "";
+  }
+});
